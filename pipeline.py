@@ -1,6 +1,6 @@
-from tools.vid_to_pic import convert_video_to_images
-from tools.synthetic_data import synthetic_data_generator
-from tools.split_data import split_data
+from Tools.vid_to_pic import convert_video_to_images
+from Tools.synthetic_data import synthetic_data_generator
+from Tools.split_data import split_data
 import argparse
 import os
 

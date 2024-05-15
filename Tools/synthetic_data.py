@@ -104,13 +104,25 @@ def create_label_file(label_path, class_id, x_center, y_center, width, height, b
 
 
 # Main function to generate synthetic images with labeled bounding boxes
-def synthetic_data_generator(stl_files, images_folder, temp_folder, final_image_path, final_label_path):
+def synthetic_data_generator(stl_path, images_folder, final_image_path, final_label_path):
     """
     Main function to generate synthetic images with labeled bounding boxes.
 
     Args:
         args (argparse.Namespace): Command-line arguments.
     """
+
+    temp_folder = "ordner"
+    os.makedirs(temp_folder)
+
+    stl_files = []
+
+    for stl_file in os.listdir(stl_path):
+        if stl_file.endswith('.stl'):
+            path = os.path.join(stl_path, stl_file)
+            stl_files.append(path)
+
+    print(stl_files)
 
     # Iterate over images in the specified folder
     for i, image_file in enumerate(os.listdir(images_folder)):  # Hintergrundbilder
@@ -170,7 +182,6 @@ def synthetic_data_generator(stl_files, images_folder, temp_folder, final_image_
                         print(f"Fehler beim Verarbeiten der STL-Datei {your_stl_file}: {e}")
                         continue
                 record_event_duration("Rend_Obj", start_time_rend)
-
 
                 ##P, geteilt durch 2 wegen leerem Bereich im Screenshot
                 avg_width = int(avg_width / (j + 1) / 2)
@@ -254,6 +265,11 @@ def synthetic_data_generator(stl_files, images_folder, temp_folder, final_image_
         memory_data = list(zip(time_intervals, memory_usage_stats))
         write_to_csv('memory_usage.csv', ['Time (s)', 'Memory Usage (MB)'], memory_data)
         write_to_csv('timestamps.csv', ['Label', 'Duration (s)'], timestamps)
+
+synthetic_data_generator("/Users/michaelkravt/PycharmProjects/BA_Repo/data/stl_files",
+                         "/Users/michaelkravt/PycharmProjects/BA_Repo/data/bilder",
+                         "/Users/michaelkravt/Desktop/Pipeline/syn_data",
+                         "/Users/michaelkravt/Desktop/Pipeline/syn_data/labels")
 
 
 # python synthetic_data.py --stl_files /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/sun_c.stl /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/planet_c.stl /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/planet_c.stl /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/lid_c.stl --output /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/images --label /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/labels --temp /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/temp --images_folder /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir
