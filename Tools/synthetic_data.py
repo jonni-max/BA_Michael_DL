@@ -14,7 +14,14 @@ memory_usage_stats = []
 timestamps = []
 
 def start_memory_monitoring(interval=1):
-    """Starts monitoring memory usage in a separate thread."""
+    """
+    Starts monitoring memory usage of the current process at regular intervals in a separate thread.
+
+    Parameters
+    ----------
+    interval : int, optional
+        The time interval, in seconds, between recordings of memory usage. Default is 1 second.
+    """
     def monitor():
         while True:
             memory_usage_stats.append(psutil.Process().memory_info().rss / 1024 ** 2)
@@ -25,50 +32,89 @@ def start_memory_monitoring(interval=1):
     t.start()
 
 def record_event_duration(label, start_time):
-    """Records the duration of an event."""
+    """
+    Records the duration of an event, appending the result to a global list.
+
+    Parameters
+    ----------
+    label : str
+        A descriptive name for the event being timed.
+    start_time : float
+        The start time of the event, typically obtained via `time.time()`.
+    """
     duration = time.time() - start_time
     timestamps.append((label, duration))
 
 def write_to_csv(file_name, header, data):
-    """Writes data to a CSV file."""
+    """
+    Writes specified data to a CSV file.
+
+    Parameters
+    ----------
+    file_name : str
+        The path where the CSV file will be created.
+    header : list of str
+        The headers for the CSV file.
+    data : list of tuples
+        The data to be written into the CSV file, where each tuple represents a row.
+    """
     with open(file_name, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(header)
         writer.writerows(data)
 
-# Function to generate a random 3D rotation matrix
+
 def generate_random_rotation_matrix():
-    start_time_matrix = time.time()
     """
     Generate a random 3D rotation matrix.
 
-    Returns:
-        np.ndarray: The random rotation matrix.
+    Returns
+    -------
+    np.ndarray
+        A 4x4 ndarray representing a random rotation matrix.
+
+    Notes
+    -----
+    This function generates random rotation angles for the x, y, and z axes within specified ranges
+    and computes the corresponding rotation matrices for each axis. These matrices are then
+    multiplied together to form a final rotation matrix which represents a composite rotation
+    about all three axes. The function also records the duration of the matrix generation process.
     """
-    # Generate random rotation angles for each axis
+    start_time_matrix = time.time()
+
+    # Define the maximum rotation angle for x and y axes
     i = np.pi / 4
     angle_x = np.random.uniform(-i, i)
     angle_y = np.random.uniform(-i, i)
-    angle_z = np.random.uniform(0, 2 * np.pi)
+    angle_z = np.random.uniform(0, 2 * np.pi)  # Full rotation range for z-axis
 
-    # Create rotation matrices for each axis
-    rotation_matrix_x = np.array([[1, 0, 0, 0],
-                                  [0, np.cos(angle_x), -np.sin(angle_x), 0],
-                                  [0, np.sin(angle_x), np.cos(angle_x), 0],
-                                  [0, 0, 0, 1]])
+    # Rotation matrix along x-axis
+    rotation_matrix_x = np.array([
+        [1, 0, 0, 0],
+        [0, np.cos(angle_x), -np.sin(angle_x), 0],
+        [0, np.sin(angle_x), np.cos(angle_x), 0],
+        [0, 0, 0, 1]
+    ])
 
-    rotation_matrix_y = np.array([[np.cos(angle_y), 0, np.sin(angle_y), 0],
-                                  [0, 1, 0, 0],
-                                  [-np.sin(angle_y), 0, np.cos(angle_y), 0],
-                                  [0, 0, 0, 1]])
+    # Rotation matrix along y-axis
+    rotation_matrix_y = np.array([
+        [np.cos(angle_y), 0, np.sin(angle_y), 0],
+        [0, 1, 0, 0],
+        [-np.sin(angle_y), 0, np.cos(angle_y), 0],
+        [0, 0, 0, 1]
+    ])
 
-    rotation_matrix_z = np.array([[np.cos(angle_z), -np.sin(angle_z), 0, 0],
-                                  [np.sin(angle_z), np.cos(angle_z), 0, 0],
-                                  [0, 0, 1, 0],
-                                  [0, 0, 0, 1]])
+    # Rotation matrix along z-axis
+    rotation_matrix_z = np.array([
+        [np.cos(angle_z), -np.sin(angle_z), 0, 0],
+        [np.sin(angle_z), np.cos(angle_z), 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ])
 
-    # Combine rotation matrices to get the final rotation matrix
+    # Combine the rotation matrices to get the final rotation matrix
     final_rotation_matrix = np.dot(rotation_matrix_z, np.dot(rotation_matrix_y, rotation_matrix_x))
+
     record_event_duration("Generate_Matrix", start_time_matrix)
     return final_rotation_matrix
 
@@ -106,10 +152,25 @@ def create_label_file(label_path, class_id, x_center, y_center, width, height, b
 # Main function to generate synthetic images with labeled bounding boxes
 def synthetic_data_generator(stl_path, images_folder, final_image_path, final_label_path):
     """
-    Main function to generate synthetic images with labeled bounding boxes.
+    Generates synthetic images with labeled bounding boxes from STL files.
 
-    Args:
-        args (argparse.Namespace): Command-line arguments.
+    Parameters
+    ----------
+    stl_path : str
+        Path to the directory containing STL files.
+    images_folder : str
+        Path to the directory containing background images.
+    final_image_path : str
+        Path to the directory where synthetic images will be saved.
+    final_label_path : str
+        Path to the directory where label files will be saved.
+
+    Notes
+    -----
+    This function processes each STL file by applying a random rotation, rendering the model,
+    and then compositing it onto a background image from `images_folder`. Labels for bounding
+    boxes are saved in `final_label_path`. Memory usage and event durations are recorded and
+    can be written to CSV files.
     """
 
     temp_folder = "ordner"
