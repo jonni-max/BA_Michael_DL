@@ -173,7 +173,7 @@ def synthetic_data_generator(stl_path, images_folder, final_image_path, final_la
     can be written to CSV files.
     """
 
-    temp_folder = "ordner"
+    temp_folder = "temp"
     os.makedirs(temp_folder)
 
     stl_files = []
@@ -327,10 +327,10 @@ def synthetic_data_generator(stl_path, images_folder, final_image_path, final_la
         write_to_csv('memory_usage.csv', ['Time (s)', 'Memory Usage (MB)'], memory_data)
         write_to_csv('timestamps.csv', ['Label', 'Duration (s)'], timestamps)
 
-synthetic_data_generator("/Users/michaelkravt/PycharmProjects/BA_Repo/data/stl_files",
-                         "/Users/michaelkravt/PycharmProjects/BA_Repo/data/bilder",
-                         "/Users/michaelkravt/Desktop/Pipeline/syn_data",
-                         "/Users/michaelkravt/Desktop/Pipeline/syn_data/labels")
+synthetic_data_generator(r"C:\GitHub\BA_Repo\data\stl_files",
+                         r"C:\Users\mikra\OneDrive\Desktop\Foto",
+                         r"C:\Users\mikra\OneDrive\Desktop\Foto\syn_data",
+                         r"C:\Users\mikra\OneDrive\Desktop\Foto\syn_data\labels")
 
 
 # python synthetic_data.py --stl_files /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/sun_c.stl /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/planet_c.stl /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/planet_c.stl /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/lid_c.stl --output /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/images --label /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/labels --temp /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/temp --images_folder /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir
