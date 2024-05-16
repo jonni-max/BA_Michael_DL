@@ -115,7 +115,7 @@ def process_single_video(input_video, output_folder, image_size, process, memory
         #if image_size:
             #img_clip = img_clip.resize(image_size)
         img_clip.save_frame(image_file, withmask=False)
-        create_random_cuts_and_scale(image_file, 2)
+        #create_random_cuts_and_scale(image_file, 2)
 
     video_clip.close()
     processing_time = time.time() - video_start_time
@@ -148,4 +148,4 @@ def create_random_cuts_and_scale(image_path, cuts):
             cut.save(cut_file_name)
     os.remove(image_path)
 
-convert_video_to_images("/Users/michaelkravt/PycharmProjects/BA_Repo/data", "/Users/michaelkravt/PycharmProjects/BA_Repo/data/bilder", "848x480")
+convert_video_to_images(r"C:\Users\mikra\OneDrive\Desktop\Foto\labor.mp4", r"C:\Users\mikra\OneDrive\Desktop\Foto", "848x480")
