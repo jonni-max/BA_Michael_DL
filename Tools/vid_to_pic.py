@@ -148,4 +148,32 @@ def create_random_cuts_and_scale(image_path, cuts):
             cut.save(cut_file_name)
     os.remove(image_path)
 
-convert_video_to_images(r"C:\Users\mikra\OneDrive\Desktop\Foto\labor.mp4", r"C:\Users\mikra\OneDrive\Desktop\Foto", "848x480")
+
+import os
+import random
+from PIL import Image
+
+
+def create_random_cuts_and_scale_pic(directory_path, cuts):
+    # Supported image file extensions
+    valid_extensions = (".png", ".jpg", ".jpeg")
+
+    # Loop through all files in the directory
+    for filename in os.listdir(directory_path):
+        image_path = os.path.join(directory_path, filename)
+
+        # Check if the file is an image
+        if os.path.isfile(image_path) and image_path.lower().endswith(valid_extensions):
+            with Image.open(image_path) as img:
+                width, height = img.size
+                for _ in range(cuts):
+                    x = random.randint(0, width - 2200)
+                    y = random.randint(0, height - 2200)
+                    cut = img.crop((x, y, x + 2200, y + 2200))
+                    cut = cut.resize((900, 900))
+                    cut_file_name = f'{os.path.splitext(image_path)[0]}_cut_scaled_{x}_{y}.jpg'
+                    cut.save(cut_file_name)
+            os.remove(image_path)
+
+create_random_cuts_and_scale_pic("/Users/michaelkravt/Downloads/parts-feeder", 30)
+#convert_video_to_images(r"C:\Users\mikra\OneDrive\Desktop\Foto\labor.mp4", r"C:\Users\mikra\OneDrive\Desktop\Foto", "848x480")
