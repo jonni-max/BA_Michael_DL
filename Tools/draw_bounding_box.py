@@ -25,9 +25,6 @@ def draw_boxes(image_path, label_path, output_path):
     Exception
         If an error occurs during file handling or during the processing of the image or labels.
 
-    Examples
-    --------
-    >>> draw_boxes('/path/to/image.jpg', '/path/to/labels.txt', '/path/to/output.jpg')
     """
 
     try:
@@ -68,6 +65,7 @@ def draw_boxes(image_path, label_path, output_path):
 
         # Save the output image
         print("Saving")
+        print("test")
         cv2.imwrite(output_path, image)
 
     except Exception as e:
@@ -79,8 +77,8 @@ files = '/Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/image
 
 for i in range(len(files)):
     # Beispielaufruf
-    image_path = f'/Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/images/{i}.jpg'
-    label_path = f'/Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/labels/{i}.txt'
-    output_path = f'/Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/labeled_images/output_{i}.jpg'
+    image_path = f'C:/Users/mikra/OneDrive/Desktop/Foto/syn_data/{i}.jpg'
+    label_path = f'C:/Users/mikra/OneDrive/Desktop/Foto/syn_data/labels/{i}.txt'
+    output_path = f'C:/Users/mikra/OneDrive/Desktop/Foto/syn_data/outputoutput_{i}.jpg'
 
     draw_boxes(image_path, label_path, output_path)

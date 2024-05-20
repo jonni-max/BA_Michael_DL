@@ -173,7 +173,7 @@ def synthetic_data_generator(stl_path, images_folder, final_image_path, final_la
     can be written to CSV files.
     """
 
-    temp_folder = "ordner_temp"
+    temp_folder = "ordner"
     os.makedirs(temp_folder)
 
     stl_files = []
@@ -222,6 +222,7 @@ def synthetic_data_generator(stl_path, images_folder, final_image_path, final_la
                         # Set the camera position for the plotter
                         plotter.camera_position = [(0, 0, -2 * mesh.length), (0, 0, 0), (0, 1, 0)]
 
+                        ##Papa geändert
                         if "lid" in your_stl_file:
                             scaling_factor = np.random.uniform(0.22, 0.3)
                         else:
@@ -327,9 +328,9 @@ def synthetic_data_generator(stl_path, images_folder, final_image_path, final_la
         write_to_csv('timestamps.csv', ['Label', 'Duration (s)'], timestamps)
 
 synthetic_data_generator("/Users/michaelkravt/PycharmProjects/BA_Repo/data/stl_files",
-                         "/Users/michaelkravt/Downloads/parts-feeder",
-                         "/Users/michaelkravt/Downloads/parts-feeder/modell/syn_data",
-                         "/Users/michaelkravt/Downloads/parts-feeder/modell/syn_data/labels")
+                         "/Users/michaelkravt/PycharmProjects/BA_Repo/data/bilder",
+                         "/Users/michaelkravt/Desktop/Pipeline/syn_data",
+                         "/Users/michaelkravt/Desktop/Pipeline/syn_data/labels")
 
 
 # python synthetic_data.py --stl_files /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/sun_c.stl /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/planet_c.stl /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/planet_c.stl /Users/michaelkravt/PycharmProjects/BA_Repo/resources/stl_files/lid_c.stl --output /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/images --label /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/labels --temp /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir/temp --images_folder /Users/michaelkravt/PycharmProjects/BA_Repo/Tools/MainDir/TestDir
