@@ -1,6 +1,6 @@
-from vid_to_pic import convert_video_to_images
-from synthetic_data import main as synthetic_data_main
-from split_data import split_data
+from tools.vid_to_pic import convert_video_to_images
+from tools.synthetic_data import synthetic_data_generator
+from tools.split_data import split_data
 import argparse
 import os
 
@@ -27,9 +27,8 @@ def main():
         label=os.path.join(args.output, 'labels'),
         temp_folder=args.temp_folder
     )
-    synthetic_data_main(synthetic_data_args)
+    synthetic_data_generator(synthetic_data_args)
 
-    # Data Splitting
     split_data(args.output, args.train_ratio, args.val_ratio)
 
 if __name__ == "__main__":
