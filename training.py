@@ -1,7 +1,6 @@
 # Module for training of the object detection model with yolov5.
+# Features include tracking of training runs with mlflow.
 #
-# Author: Johannes
-# Date: June, 2024
 
 from pathlib import Path
 import importlib.util
@@ -40,6 +39,7 @@ data_yaml_path = os.path.join(data_dir, 'training/pen-parts', 'data.yaml')
 cfg_path = os.path.join(data_dir, 'model/pen-parts', 'custom_yolov5s.yaml')
 hyp_path = os.path.join(data_dir, 'model/pen-parts', 'hyp.yaml')
 model_path = os.path.join(data_dir, 'model/pen-parts/weights', 'pen-parts.pt')
+model_training_dir = os.path.join(data_dir, 'model/pen-parts')
 
 # Do the training
 train.run(
@@ -48,8 +48,11 @@ train.run(
     hyp=hyp_path,
     imgsz=416,
     weights='',
-    name='pen-parts.pt',
+    project=model_training_dir,
+    name='pipeline',
     batch_size=1,
-    epochs=3
+    epochs=100,
+    workers=0 # DEBUG Execution failes when 'workers' is changed
 )
+
 
