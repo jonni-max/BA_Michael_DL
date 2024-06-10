@@ -51,8 +51,8 @@ train.run(
     project=model_training_dir,
     name='pipeline',
     batch_size=1,
-    epochs=100,
-    workers=0 # DEBUG Execution failes when 'workers' is changed
+    epochs=2,
+    workers=1 # DEBUG Execution failes when 'workers' is changed
 )
 
 
